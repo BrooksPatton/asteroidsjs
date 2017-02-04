@@ -5,9 +5,11 @@ let playing = false
 let lives = 1
 let score = 0
 let highScore = 0
+let level = 1
 
 function setup() {
   createCanvas(800, 600)
+  ship = new Ship()
 }
 
 function draw() {
@@ -61,6 +63,10 @@ function draw() {
     ship.boost()
     ship.applyFriction()
     ship.edges()
+
+    if(asteroids.length === 0) {
+      resetGame()
+    }
   }
   else if(lives === 1) {
     textSize(32)
@@ -125,14 +131,22 @@ function endGame() {
 }
 
 function resetGame() {
-  asteroids = []
-  lasers = []
-  playing = true
-  lives = 1
-  ship = new Ship()
-  const numberAsteroids = random(3, 10)
-  for(let i = 0; i < numberAsteroids; i++){
-    asteroids.push(new Asteroid())
+  if(lives && playing) {
+    level++
+  } else {
+    asteroids = []
+    lasers = []
+    playing = true
+    lives = 1
+    ship = new Ship()
+    score = 0
   }
-  score = 0
+
+  const numberAsteroids = level + 2
+  while(asteroids.length < numberAsteroids) {
+    const newAsteroid = new Asteroid()
+    if(!ship.hits(newAsteroid)) {
+      asteroids.push(newAsteroid)
+    }
+  }
 }
