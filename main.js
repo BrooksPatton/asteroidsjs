@@ -92,7 +92,8 @@ function draw() {
   fill(255)
   textAlign(RIGHT)
   text(`Score: ${score}`, 0, 0, width, height)
-  text(`High Score: ${highScore}`, 0, 32, width, height)
+  text(`High Score: ${highScore}`, 0, 20, width, height)
+  text(`Level: ${level}`, 0, 40, width, height )
 }
 
 function keyPressed() {
