@@ -3,6 +3,8 @@ let asteroids
 let lasers
 let playing = false
 let lives = 1
+let score = 0
+let highScore = 0
 
 function setup() {
   createCanvas(800, 600)
@@ -10,7 +12,13 @@ function setup() {
 
 function draw() {
   background(0)
+
   if(playing && lives) {
+    score++
+    if(score > highScore) {
+      highScore = score
+    }
+
     for(let i = lasers.length - 1; i >= 0; i--) {
       lasers[i].render()
       lasers[i].update()
@@ -22,6 +30,8 @@ function draw() {
 
       for(let j = asteroids.length - 1; j >= 0; j--) {
         if(lasers[i].hits(asteroids[j])) {
+          score += 100
+
           if(asteroids[j].radius > 10) {
             const newAsteroids = asteroids[j].breakup()
             asteroids = asteroids.concat(newAsteroids)
@@ -72,6 +82,12 @@ function draw() {
     textAlign(CENTER)
     text('Press return to play again', 0, height * 0.5 + 32, width, height)
   }
+
+  textSize(16)
+  fill(255)
+  textAlign(RIGHT)
+  text(`Score: ${score}`, 0, 0, width, height)
+  text(`High Score: ${highScore}`, 0, 32, width, height)
 }
 
 function keyPressed() {
@@ -118,4 +134,5 @@ function resetGame() {
   for(let i = 0; i < numberAsteroids; i++){
     asteroids.push(new Asteroid())
   }
+  score = 0
 }
