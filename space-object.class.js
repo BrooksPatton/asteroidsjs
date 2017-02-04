@@ -23,6 +23,6 @@ class SpaceThing {
   hits(thing) {
     const distance = dist(this.position.x, this.position.y, thing.position.x, thing.position.y)
 
-    return distance < thing.radius + (thing.radius * 0.5)
+    return distance < thing.radius * 1.7
   }
 }

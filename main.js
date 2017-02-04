@@ -16,7 +16,6 @@ function draw() {
   background(0)
 
   if(playing && lives) {
-    score++
     if(score > highScore) {
       highScore = score
     }
@@ -32,7 +31,7 @@ function draw() {
 
       for(let j = asteroids.length - 1; j >= 0; j--) {
         if(lasers[i].hits(asteroids[j])) {
-          score += 100
+          score += 100 * level
 
           if(asteroids[j].radius > 10) {
             const newAsteroids = asteroids[j].breakup()
@@ -98,6 +97,7 @@ function draw() {
 
 function keyPressed() {
   if(key === ' ') {
+
     lasers.push(new Laser(ship.getPosition(), ship.getHeading()))
   }
 
@@ -142,7 +142,7 @@ function resetGame() {
     score = 0
   }
 
-  const numberAsteroids = level + 2
+  const numberAsteroids = level * 2
   while(asteroids.length < numberAsteroids) {
     const newAsteroid = new Asteroid()
     if(!ship.hits(newAsteroid)) {
